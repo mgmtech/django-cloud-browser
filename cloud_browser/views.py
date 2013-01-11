@@ -56,7 +56,7 @@ def _breadcrumbs(path):
 
 
 @settings_view_decorator
-def browser(request, path='', template="cloud_browser/browser.html"):
+def browser(request, path='', template="cloud_browser/browser.html", conn=None):
     """View files in a file path.
 
     :param request: The request.
@@ -85,7 +85,7 @@ def browser(request, path='', template="cloud_browser/browser.html"):
     #     We optimize here by not individually looking up containers later,
     #     instead going through this in-memory list.
     # TODO: Should page listed containers with a ``limit`` and ``marker``.
-    conn = get_connection()
+    conn = get_connection() if conn is None else conn
     containers = conn.get_containers()
 
     marker_part = None
